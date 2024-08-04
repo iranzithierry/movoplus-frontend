@@ -14,7 +14,8 @@ const fetchCartProducts = async (localStorageCartProducts: CartState): Promise<P
     try {
         const client = await getApiClient();
         const productIds = localStorageCartProducts?.cartProducts?.map(item => item?.id).join(',');
-        const products = await client.products.productsList('', '', `[${productIds}]`);
+        if(productIds.length == 0) return []
+        const products = await client.products.productsList(undefined, undefined, `[${productIds}]`);
         return products
     } catch (error) {
         throw new Error('Error fetching cart products: ' + error);

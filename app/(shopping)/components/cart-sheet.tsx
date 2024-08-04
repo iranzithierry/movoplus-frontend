@@ -19,29 +19,40 @@ export default function ShoppingCartSheet({ open, setOpen }: { open: boolean, se
     } = useGlobal()
     const [loading, setLoading] = useState(true);
 
-
-    useEffect(() => {
+    const fetchCartedProducts = async () => {
         try {
-            setLoading(l => !l);
-            if(open){
-                refreshCartedProducts(true)
-            }
+            await refreshCartedProducts(true)
         } catch (error) {
             console.error(error);
         } finally {
             setLoading(false);
         }
+    }
+
+    useEffect(() => {
+        if (open) {
+            fetchCartedProducts()
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
-    const total = cartProducts.reduce((total, product) => {
-        const price = typeof product.price === 'number' ? product.price : parseFloat(product.price);
-        return total + price;
-    }, 0);
+    const sortedCartProducts = [...cartProducts].sort((a, b) => {
+        const localStorageOrder = 
+            localStorageCartProducts?.cartProducts.findIndex(p => p.id === a.id) -
+            localStorageCartProducts?.cartProducts.findIndex(p => p.id === b.id);
+
+        return localStorageOrder;
+    });
+
+  const total = cartProducts.reduce((total, product) => {
+    const price = typeof product.price === 'number' ? product.price : parseFloat(product.price);
+    const quantity = localStorageCartProducts.cartProducts.find(lProduct => lProduct.id === product.id)?.quantity ?? 0;
+    return total + (price * (quantity as number));
+  }, 0);
     return (
         <Sidebar setOpen={setOpen} open={open} title='Shopping cart'>
             <ScrollArea className="flex-1 px-4 py-2 sm:px-6">
-                {cartProducts.length == 0 && <EmptyCart />}
+                {sortedCartProducts.length == 0 && !loading && <EmptyCart />}
                 <div className="flow-root">
                     <ul role="list" className="-my-6 divide-y divide-gray-200">
                         {loading ? (
@@ -51,13 +62,13 @@ export default function ShoppingCartSheet({ open, setOpen }: { open: boolean, se
                                 ))}
                             </div>
                         ) : (
-                            cartProducts && cartProducts.map((product, idx) => (
+                            sortedCartProducts && sortedCartProducts.map((product, idx) => (
                                 <CartSheetItem key={idx} product={product} />
                             )))}
                     </ul>
                 </div>
             </ScrollArea>
-            <CartSheetFooter loading={loading} setOpen={setOpen} total={total} cartProducts={cartProducts} />
+            <CartSheetFooter loading={loading} setOpen={setOpen} total={total} cartProducts={sortedCartProducts} />
         </Sidebar >
     )
 }

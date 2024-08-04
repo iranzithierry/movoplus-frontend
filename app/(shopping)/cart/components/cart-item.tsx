@@ -1,9 +1,9 @@
-import React from 'react'
+"use client";
+import React, { useCallback } from 'react'
 import Image from 'next/image'
 import { Product, StatusEnum } from '@/api'
 import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { CartState } from '../../marketplace/product/[uuid]/components/product-options'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { useGlobal } from '@/contexts/global-context'
 import { formatMoney, setToLocalStorage } from '@/lib/utils'
 import Link from 'next/link'
@@ -17,10 +17,12 @@ interface CartItemProps {
 }
 export default function CartItem({ product, localStorageCartProducts, productIdx }: CartItemProps) {
     const { removeFromCart, refreshCartedProducts } = useGlobal()
-    const refreshCart = ()  =>{
+    const refreshCart = useCallback(() => {
         refreshCartedProducts()
-    }
-    const updateQuantity = (newQuantity: number) => {
+    }, [refreshCartedProducts])
+
+    const updateQuantity = useCallback((newQuantity: number) => {
+        if(newQuantity == 0) return;
         const updatedCartProducts = localStorageCartProducts.cartProducts.map(item => {
             if (item.id === product.id) {
                 return { ...item, quantity: newQuantity }
@@ -34,7 +36,7 @@ export default function CartItem({ product, localStorageCartProducts, productIdx
         }
         setToLocalStorage(LS_NAMES.CART_STATE, updatedLocalStorageCartProducts);
         refreshCart()
-    }
+    }, [localStorageCartProducts, product.id, refreshCart])
 
     return (
         <li key={product.id} className="flex py-6 sm:py-10">
@@ -55,25 +57,13 @@ export default function CartItem({ product, localStorageCartProducts, productIdx
                             <p className="text-gray-500">Color: {localStorageCartProducts.cartProducts.find(lProduct => lProduct.id == product.id)?.color ?? 'None'}</p>
                             <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">Size: {localStorageCartProducts.cartProducts.find(lProduct => lProduct.id == product.id)?.size ?? 'None'}</p>
                         </div>
+                        <div className="mt-1 flex text-sm">
+                            <p className="ml-4border-gray-200 text-gray-500">Quantity: {localStorageCartProducts.cartProducts.find(lProduct => lProduct.id == product.id)?.quantity ?? 1}</p>
+                        </div>
                         <p className="mt-1 text-sm font-medium text-gray-900">{formatMoney(product.price)}</p>
                     </div>
 
                     <div className="mt-4 sm:mt-0 sm:pr-9">
-                        {/* <Select defaultValue='1' onValueChange={}>
-                            <SelectTrigger className="" name={`quantity-${productIdx}`} >
-                                <SelectValue placeholder="Select a quantity" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Quantity</SelectLabel>
-                                    <SelectItem value={'1'}>1</SelectItem>
-                                    <SelectItem value={'2'}>2</SelectItem>
-                                    <SelectItem value={'3'}>3</SelectItem>
-                                    <SelectItem value={'4'}>4</SelectItem>
-                                    <SelectItem value={'5'}>5</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select> */}
                         <IncrementButton updateQuantity={updateQuantity}/>
 
                         <div className="absolute right-0 top-0">

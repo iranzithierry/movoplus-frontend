@@ -1,6 +1,5 @@
 "use server";
 import { fetchCartProducts } from "./cart";
-import { redirect } from "next/navigation";
 import { createCheckoutSession } from "./stripe";
 import { CheckoutFormSchema, CheckoutFormState } from "../definitions/checkout";
 import { findLsProductById, formatAmountForStripe, removeEmptyKeys } from "../utils";
@@ -13,16 +12,17 @@ export async function checkout(state: any, formData: FormData): Promise<Checkout
         lsCartState: lsCartState
     });
     if (!validatedFields.success) {
+        const errorMessage = parseValidationErrors(validatedFields.error.format())
         return {
-            errorMessage: "Oops! It looks like your cart is empty.<BRK>Please add items before proceeding to checkout.",        
-        };
+            errorMessage: errorMessage,
+        }
     }
 
-    const checkoutProducts: any[] = [];
     if (lsCartState?.cartProducts.length > 0) {
         try {
             const products = await fetchCartProducts(lsCartState);
             if (products.length > 0) {
+                const checkoutProducts: any[] = [];
                 products.forEach((product) => checkoutProducts.push({
                     quantity: findLsProductById(product.id, lsCartState)?.quantity,
                     price_data: {
@@ -38,13 +38,13 @@ export async function checkout(state: any, formData: FormData): Promise<Checkout
                 }))
                 try {
                     // TODO:
-                    // const { orderCreated, callbackMessage} = createOrder()
+                    // const { orderCreated, callbackMessage } = createOrder()
                     // if (orderCreated) {
                         const { url } = await createCheckoutSession(removeEmptyKeys(checkoutProducts))
                         return {
                             checkoutSessionUrl: url
                         }
-                        // }
+                    // }
                 } catch (error: any) {
                     console.error(error.message)
                     return {
@@ -64,6 +64,34 @@ export async function checkout(state: any, formData: FormData): Promise<Checkout
         }
     }
     return {
-        errorMessage: "Oops! It looks like your cart is empty.<BRK>Please add items before proceeding to checkout.",        
+        errorMessage: "Oops! It looks like your cart is empty.<BRK>Please add items before proceeding to checkout.",
     };
 }
+
+
+function parseValidationErrors(errors: any): string {
+    if (errors.lsCartState && errors.lsCartState.cartProducts) {
+        const cartProducts = errors.lsCartState.cartProducts
+        for (const index in cartProducts) {
+            if (index !== '_errors') {
+                const product = cartProducts[index]
+                for (const field in product) {
+                    if (field !== '_errors' && product[field]._errors && product[field]._errors.length > 0) {
+                        return `The ${toOrdinalSuffix(index + 1)} Product ${field} is required`
+                    }
+                }
+            }
+        }
+    }
+    return "Validation error occurred"
+}
+const toOrdinalSuffix = (num: string | number) => {
+    const int = typeof num !== 'number' ? parseInt(num) : num,
+        digits = [int % 10, int % 100],
+        ordinals = ['st', 'nd', 'rd', 'th'],
+        oPattern = [1, 2, 3, 4],
+        tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+    return oPattern.includes(digits[0]) && !tPattern.includes(digits[1])
+        ? int + ordinals[digits[0] - 1]
+        : int + ordinals[3];
+};

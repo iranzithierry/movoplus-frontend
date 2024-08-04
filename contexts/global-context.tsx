@@ -53,19 +53,27 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [setTotalCartItems]);
 
 
+
   /**
-   * Adds a product to the user's cart, updating the local storage and state accordingly.
+   * Adds a product to the cart, updating the local storage and cart state accordingly.
    *
-   * @param product - The product to add to the cart.
+   * @param product - The product to be added to the cart.
    * @param selectedColor - The color of the product selected by the user.
    * @param selectedSize - The size of the product selected by the user.
    * @returns void
    */
   const addToCart = (product: Product, selectedColor: string, selectedSize: string) => {
     const currentCartState: CartState = getFromLocalStorage(LS_NAMES.CART_STATE) || { cartProducts: [] };
-    const existingProduct = currentCartState.cartProducts.some(item => item?.id === product.id);
+    const currentCartProduct = currentCartState.cartProducts.find(item => item?.id === product.id);
 
-    if (!existingProduct) {
+    if (!currentCartProduct) {
+      if (!selectedColor) {
+        toast.error("Please select a color");
+        return
+      } if (!selectedSize) {
+        toast.error("Please select a size");
+        return
+      }
       currentCartState.cartOwnerId = user?.id;
       currentCartState.cartProducts.push({
         id: product.id,
@@ -76,12 +84,11 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setToLocalStorage(LS_NAMES.CART_STATE, currentCartState);
       toast.success('Product added to cart!');
     } else {
-      if (currentCartState.cartOwnerId === user?.id) {
-        toast.info('Product already in cart');
-      } else {
-        currentCartState.cartOwnerId = user?.id
-        setToLocalStorage(LS_NAMES.CART_STATE, currentCartState)
-        toast.success('Cart ownership updated')
+      if (currentCartProduct.color !== selectedColor || currentCartProduct.size !== selectedSize) {
+        currentCartProduct.color = selectedColor;
+        currentCartProduct.size = selectedSize;
+        setToLocalStorage(LS_NAMES.CART_STATE, currentCartState);
+        return toast.success('Product updated in cart!');
       }
     }
     setTotalCartItems(currentCartState.cartProducts.length);
@@ -97,19 +104,17 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const refreshCartedProducts = useCallback(async (serverProducts: boolean = false) => {
     const storedLocalCartState: CartState = getFromLocalStorage(LS_NAMES.CART_STATE);
     setLocalStorageCartProducts(storedLocalCartState);
-    if (storedLocalCartState?.cartOwnerId === user?.id || !storedLocalCartState?.cartOwnerId) {
-      if (serverProducts && storedLocalCartState?.cartProducts.length > 0) {
-        try {
-          const products = await fetchCartProducts(storedLocalCartState);
-          setCartProducts(products);
-        }
-        catch (error: any) {
-          console.error(error.message);
-        }
+    if (serverProducts && storedLocalCartState?.cartProducts.length > 0) {
+      try {
+        const products = await fetchCartProducts(storedLocalCartState);
+        setCartProducts(products);
       }
-      setTotalCartItems(storedLocalCartState?.cartProducts.length ?? 0);
+      catch (error: any) {
+        console.error(error.message);
+      }
     }
-  }, [user?.id]);
+    setTotalCartItems(storedLocalCartState?.cartProducts.length ?? 0);
+  }, []);
 
 
   useEffect(() => {

@@ -50,7 +50,7 @@ const ProductOptions = ({ product }: ProductOptionsProps) => {
                 </h3>
                 <DisclosurePanel className="pt-6">
                     <div className="space-y-6">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut pariatur nam ea. A quasi, facere, nisi, distinctio odit sapiente eos voluptatum architecto quidem quia facilis minus nemo iusto dolore. Nobis!</p>
+                        <p>{product.description}</p>
                     </div>
                 </DisclosurePanel>
             </Disclosure>

@@ -9,7 +9,7 @@ export default function IncrementButton({ updateQuantity }: {updateQuantity: (ne
     const handleIncrement = () => {
         setCount(prevCount => {
             const newCount = prevCount + 1
-            _.debounce(() => updateQuantity(newCount), 300)()
+            _.debounce(() => updateQuantity(newCount), 100)()
             return newCount
         })
     }
@@ -17,7 +17,8 @@ export default function IncrementButton({ updateQuantity }: {updateQuantity: (ne
     const handleDecrement = () => {
         setCount(prevCount => {
             const newCount = Math.max(0, prevCount - 1)
-            _.debounce(() => updateQuantity(newCount), 300)()
+            if (newCount === 0) return newCount+1
+            _.debounce(() => updateQuantity(newCount), 100)()
             return newCount
         })
     }
