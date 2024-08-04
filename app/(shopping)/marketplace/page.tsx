@@ -22,7 +22,7 @@ export default async function Home() {
       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         {products && products.map((product) => (
           <Link key={product.id} href={`/marketplace/product/${product.id}`} className="group relative cursor-pointer">
-            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80">
+            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
               <Image width={800} height={800} src={product.cover_image?.original ?? '/images/placeholder.svg'} alt={product.name} className="h-full w-full object-cover object-center transition duration-300 ease-in-out group-hover:scale-105" />
             </div>
             <div className='absolute bottom-0 left-0 flex w-full px-4 pb-4 justify-center'>

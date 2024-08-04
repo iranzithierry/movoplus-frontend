@@ -57,12 +57,12 @@ const ImageGallery = ({ images, coverImage }: ImageGalleryProps) => {
         <div className='md:flex-row  flex-col-reverse flex gap-2 items-start'>
             <div className='flex flex-row md:flex-col gap-2 overflow-auto max-h-[25.5rem]'>
                 {images.map((image, idx) => (
-                    <div className="aspect-[1/1] max-h-24 overflow-hidden rounded-md bg-gray-100" key={idx}>
+                    <div className="aspect-[1/1] max-h-24 overflow-hidden rounded-md bg-gray-200" key={idx}>
                         <Image height={getImageDimensions(image.image.medium)?.height} width={getImageDimensions(image.image.medium)?.width} onClick={() => setSelectedImage(image.image.original)} src={image.image.medium ?? '/images/placeholder.svg'} alt={coverImage?.original ?? 'Product Image'} className="object-cover object-center rounded-md shadow-sm hover:scale-110 transition cursor-pointer" />
                     </div>
                 ))}
             </div>
-            <div className="overflow-hidden max-h-[24rem] sm:max-h-[30rem] h-full w-full  md:aspect-2 rounded-lg relative">
+            <div className="overflow-hidden max-h-[24rem] sm:max-h-[30rem] h-full w-full  md:aspect-2 rounded-lg relative bg-gray-200">
                 <Image width={400} height={400} src={selectedImage} alt={coverImage?.original ?? 'Product Image'} className="object-cover h-full w-full object-center" />
                 <button onClick={() => setOpen(true)} className='absolute top-0 right-0 p-2 m-2 rounded-md z-20 backdrop-blur-md hover:bg-white/50'>
                     <ArrowsPointingOutIcon className='h-6 w-6 text-white' />
