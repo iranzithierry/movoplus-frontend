@@ -1,0 +1,8 @@
+{
+    "builds": [
+        {
+            "src": "./(vendors)/**/*.tsx",
+            "use": "@vercel/static"
+        }
+    ]
+}
