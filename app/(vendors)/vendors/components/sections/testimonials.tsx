@@ -67,9 +67,9 @@ const featuredTestimonial = {
     ],
   ]
   
-  export default function Example() {
+  export default function Testimonials() {
     return (
-      <div className="relative isolate bg-white pb-32 pt-24 sm:pt-32">
+      <div className="relative  isolate bg-white pb-32 pt-24 sm:pt-32">
         <div
           className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 transform-gpu overflow-hidden opacity-30 blur-3xl"
           aria-hidden="true"
@@ -94,14 +94,14 @@ const featuredTestimonial = {
             }}
           />
         </div>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div>
           <div className="mx-auto max-w-xl text-center">
             <h2 className="text-lg font-semibold leading-8 tracking-tight text-indigo-600">Testimonials</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               We have worked with thousands of amazing people
             </p>
           </div>
-          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 grid-rows-1 gap-8 text-sm leading-6 text-gray-900 sm:mt-20 sm:grid-cols-2 xl:mx-0 xl:max-w-none xl:grid-flow-col xl:grid-cols-4">
+          <div className="mx-auto mt-16 grid grid-cols-1 grid-rows-1 gap-8 text-sm leading-6 text-gray-900 sm:mt-20 sm:grid-cols-2 xl:mx-0 xl:max-w-none xl:grid-flow-col xl:grid-cols-4">
             <figure className="col-span-2 hidden sm:block sm:rounded-2xl sm:bg-white sm:shadow-lg sm:ring-1 sm:ring-gray-900/5 xl:col-start-2 xl:row-end-1">
               <blockquote className="p-12 text-xl font-semibold leading-8 tracking-tight text-gray-900">
                 <p>{`“${featuredTestimonial.body}”`}</p>
