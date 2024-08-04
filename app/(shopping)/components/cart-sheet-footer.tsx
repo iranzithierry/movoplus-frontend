@@ -21,7 +21,7 @@ export default function CartSheetFooter({ loading, setOpen, total, cartProducts 
             <p className="mt-0.5 text-sm text-gray-500">Delivery cost calculated at checkout.</p>
             <div className="mt-6 space-y-2">
                 <CheckoutForm btnSize='lg' />
-                <LinkButton size={'lg'} variant={'outline'} linkTo="/cart" className='w-full'>
+                <LinkButton onClick={() => setOpen(false)} size={'lg'} variant={'outline'} linkTo="/cart" className='w-full'>
                     View Cart
                 </LinkButton>
             </div>
