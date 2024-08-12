@@ -1,17 +1,24 @@
-# Stage 1: Build the application
-FROM node:21.7.3 AS builder
+FROM node:18 as builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package management files first for caching
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-# Install dependencies using pnpm
 RUN npm install
 
-# Copy the rest of the application code
-COPY . /app/
+COPY . .
 
-# Build the Next.js application
 RUN npm run build
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./next.config.js
+

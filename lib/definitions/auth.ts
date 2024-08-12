@@ -29,7 +29,7 @@ export const LoginFormSchema = z.object({
         .email({ message: 'Please enter a valid email.' }),
     password: z
         .string()
-        .min(6, { message: 'Be at least 6 characters long.' })
+        .min(4, { message: 'Be at least 4 characters long.' })
         .max(32, { message: 'Be at most 32 characters long.' })
 
 });

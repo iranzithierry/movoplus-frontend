@@ -11,7 +11,7 @@ import Sidebar from '@/components/ui/sidebar'
 const navigation = [
     { name: 'Marketplace', href: '/marketplace' },
     { name: 'Vendors', href: '/dashboard' },
-    { name: 'Pricing', href: '/vendors/pricing' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '#about' },
     { name: 'Features', href: '#features' },
 ]
@@ -21,7 +21,7 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [textColor, setTextColor] = useState('text-gray-900')
     useEffect(() => {
-        pathName == "/vendors/pricing" ? setTextColor('text-white') : setTextColor('text-gray-900')
+        pathName == "/pricing" ? setTextColor('text-white') : setTextColor('text-gray-900')
     }, [pathName])
     return (
         <header className="absolute inset-x-0 top-0 z-50">

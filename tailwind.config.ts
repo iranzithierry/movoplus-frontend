@@ -9,13 +9,6 @@ const config = {
   ],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system"],
@@ -84,7 +77,6 @@ const config = {
   plugins: [
     require('autoprefixer'),
     require("tailwindcss-animate"), 
-    require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography')
   ]} satisfies Config

@@ -10,6 +10,5 @@
  */
 export type CustomTokenRefresh = {
     refresh: string;
-    readonly access: string;
 };
 

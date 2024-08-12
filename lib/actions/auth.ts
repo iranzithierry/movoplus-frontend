@@ -8,6 +8,8 @@ import { extractErrorValues } from '../utils';
 import { authenticate } from '../helpers/auth';
 import { COOKIE_NAMES } from '../constants/config';
 import { AuthFormState, LoginFormSchema, SignupFormSchema, } from '../definitions/auth';
+import { NextResponse } from 'next/server';
+import { NextURL } from 'next/dist/server/web/next-url';
 
 /**
  * Registers a new user account with the provided form data.
@@ -88,6 +90,8 @@ export async function login(
     } catch (err: any) {
         wait = true;
         const error: ApiError = err;
+        console.log(err);
+
         return { message: error.body?.detail ?? 'An error occurred while logging in.' }
     } finally {
         if (!wait) {
@@ -104,12 +108,16 @@ export async function login(
 /**
  * Logs out the current user by deleting the access and refresh tokens from the cookies and redirects the user to the home page.
  */
-export async function logout() {
+export async function logout(returnTo = "/marketplace", nextResponse?: NextResponse, nextUrl?: NextURL) {
+    const cookiesManager = nextResponse ? nextResponse.cookies : cookies();
+    const redirector: () => void = nextResponse 
+        ? () => { NextResponse.redirect(new URL(returnTo, nextUrl)) }
+        : () => { redirect(returnTo) };
     try {
-        cookies().delete(COOKIE_NAMES.ACCESS_TOKEN);
-        cookies().delete(COOKIE_NAMES.REFRESH_TOKEN);
+        cookiesManager.delete(COOKIE_NAMES.ACCESS_TOKEN);
+        cookiesManager.delete(COOKIE_NAMES.REFRESH_TOKEN);
     } catch (error: any) {
     } finally {
-        redirect('/')
+        redirector();
     }
 }

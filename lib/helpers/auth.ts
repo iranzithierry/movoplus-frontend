@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { COOKIE_NAMES } from '@/lib/constants/config';
 import { NextRequest, NextResponse } from 'next/server';
 import { BACKEND_HOST, COOKIE_TIME } from '@/lib/constants/config';
+import { logout } from '../actions/auth';
 
 interface Tokens {
   access: string
@@ -40,45 +41,38 @@ async function authenticate(tokens: Tokens) {
  * @returns The NextResponse object with the updated access token cookie.
  * @throws {Error} If an error occurs during the token refresh, the error message will be logged.
  */
-async function updateAccessToken(request: NextRequest) {
+async function isAccessTokenValid(request: NextRequest) {
+  let accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+  let isValid = await decrypt(accessToken).then(() => true).catch(() => false)
+  return isValid;
+}
+
+async function refreshAccessToken(request: NextRequest, onFail: 'login' | 'delete-refresh-token' = 'login') {
   const response = NextResponse.next();
-  const accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
   const refreshToken = request.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
-  if (accessToken && !(await decrypt(accessToken).catch(() => true))) {
-    return response;
-  }
-  if (!refreshToken) {
-    deleteCookieTokens()
-    return response;
-  }
   try {
-    const tokens = await fetch(`${BACKEND_HOST}/api/auth/token/refresh/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refresh: refreshToken })
-    });
-    const newTokens = await tokens.json()
-    if (!newTokens || !('access' in newTokens)) {
-      return response;
+    let tokens = await (await getApiClient()).auth.authTokenRefreshCreate({ refresh: `${refreshToken}` })
+    if ('access' in tokens) {
+      setCookie(COOKIE_NAMES.ACCESS_TOKEN, tokens.access as string, COOKIE_TIME.ACCESS_TOKEN, response);
+    } else {
+      handleOnFail()
     }
 
-    if ('access' in newTokens) {
-      setCookie(COOKIE_NAMES.ACCESS_TOKEN, newTokens.access as string, COOKIE_TIME.ACCESS_TOKEN, response)
-    }
   } catch (error: any) {
-    deleteCookieTokens()
-    console.error(`Token update error: ${error.message}`);
+    handleOnFail()
   }
-  function deleteCookieTokens() {
-    response.cookies.delete(COOKIE_NAMES.ACCESS_TOKEN);
-    response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
-
+  function handleOnFail() {
+    if (onFail == "login") {
+      response.cookies.set(COOKIE_NAMES.REDIRECT_BACK, request.url, { maxAge: COOKIE_TIME.REDIRECT_BACK })
+      logout(`/login`, response, request.nextUrl)
+    } else {
+      response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
+    }
   }
 
   return response;
 }
-
 /**
  * Sets a cookie with the specified key, value, and max age.
  *
@@ -119,4 +113,4 @@ const getUser = async () => {
   }
 };
 
-export { authenticate, updateAccessToken, getUser };
+export { authenticate, refreshAccessToken, isAccessTokenValid, getUser };
