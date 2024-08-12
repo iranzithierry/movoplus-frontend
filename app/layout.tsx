@@ -75,7 +75,7 @@ function AuthWrapper({ children }: { children: React.ReactNode }): React.ReactEl
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("bg-background font-sans antialiased", displayFont.variable, monoFont.variable)}>
+      <body className={cn("bg-background font-display antialiased", displayFont.variable, monoFont.variable)}>
         <Suspense fallback={<div>Loading...</div>}>
           <AuthWrapper>
             <GlobalProvider>
