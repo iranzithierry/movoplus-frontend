@@ -1,7 +1,6 @@
 import 'server-only';
 
 import { decrypt } from '../jwt';
-import * as crypto  from 'crypto'
 import { getApiClient } from '../api';
 import { cookies } from 'next/headers';
 import { logout } from '../actions/auth';
@@ -22,10 +21,11 @@ async function authenticate(tokens: Tokens) {
     throw new Error(`Authentication error: ${error.message}`);
   }
 }
-async function generateSessionId () {
+async function generateSessionId (nextResponse: NextResponse<unknown>) {
   try {
-    const key = crypto.randomBytes(16).toString('base64');
-    setCookie(COOKIE_NAMES.SESSION_ID, key, COOKIE_TIME.SESSION_ID,)
+    const key = crypto.randomUUID();
+    setCookie(COOKIE_NAMES.SESSION_ID, key, COOKIE_TIME.SESSION_ID, nextResponse)
+    return key;
   } catch (error: any) {
     console.error("Generate session ID error:", error.message)
   }
@@ -33,8 +33,13 @@ async function generateSessionId () {
 
 
 
-async function isAccessTokenValid(request: NextRequest) {
-  let accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+async function isAccessTokenValid(request?: NextRequest, directAccessToken?: string) {
+  let accessToken;
+  if(directAccessToken){
+    accessToken = directAccessToken;
+  } else if(request) {
+    accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+  }
   let isValid = await decrypt(accessToken).then(() => true).catch(() => false)
   return isValid;
 }
@@ -59,7 +64,7 @@ async function refreshAccessToken(request: NextRequest, onFail: 'login' | 'delet
   }
   function handleOnFail() {
     if (onFail == "login") {
-      response.cookies.set(COOKIE_NAMES.REDIRECT_BACK, request.url, { maxAge: COOKIE_TIME.REDIRECT_BACK })
+      response.cookies.set(COOKIE_NAMES.REDIRECT_BACK, request.nextUrl.pathname, { maxAge: COOKIE_TIME.REDIRECT_BACK })
       logout(`/login`, response, request.nextUrl)
     } else {
       response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);

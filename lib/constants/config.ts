@@ -14,7 +14,6 @@ const COOKIE_NAMES = {
 
 const REDIS_KEYS = {
     ACCESS_TOKEN: "access.token.{sessionId}",
-    REFRESH_TOKEN: "refresh.token.{sessionId}",
 }
 
 
@@ -61,7 +60,8 @@ export {
     CURRENCY,
     MIN_AMOUNT,
     MAX_AMOUNT,
-    AMOUNT_STEP
+    AMOUNT_STEP,
+    REDIS_KEYS
 }
 
 

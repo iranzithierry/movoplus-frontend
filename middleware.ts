@@ -13,14 +13,16 @@ export async function middleware(request: NextRequest) {
 
     const accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
     const refreshToken = request.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
-    const sessionId = request.cookies.get(COOKIE_NAMES.SESSION_ID)?.value
+
+    let sessionId = request.cookies.get(COOKIE_NAMES.SESSION_ID)?.value
     
 
     const nextResponse = NextResponse.next();
 
     if(!sessionId){
-        generateSessionId();
+        sessionId = await generateSessionId(nextResponse);
     }
+    
     if (accessingProtectedRoute) {
         if (!accessToken) {
             if (refreshToken) {
