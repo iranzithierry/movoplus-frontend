@@ -1,24 +1,19 @@
 import 'server-only';
 
 import { decrypt } from '../jwt';
+import * as crypto  from 'crypto'
 import { getApiClient } from '../api';
 import { cookies } from 'next/headers';
+import { logout } from '../actions/auth';
 import { redirect } from 'next/navigation';
 import { COOKIE_NAMES } from '@/lib/constants/config';
 import { NextRequest, NextResponse } from 'next/server';
-import { BACKEND_HOST, COOKIE_TIME } from '@/lib/constants/config';
-import { logout } from '../actions/auth';
-
+import { COOKIE_TIME } from '@/lib/constants/config';
 interface Tokens {
   access: string
   refresh: string
 }
-/**
- * Authenticates a user by setting access and refresh tokens as cookies.
- *
- * @param tokens - An object containing the access and refresh tokens.
- * @throws {Error} If there is an error setting the cookies.
- */
+
 async function authenticate(tokens: Tokens) {
   try {
     setCookie(COOKIE_NAMES.ACCESS_TOKEN, tokens.access, COOKIE_TIME.ACCESS_TOKEN,)
@@ -27,20 +22,17 @@ async function authenticate(tokens: Tokens) {
     throw new Error(`Authentication error: ${error.message}`);
   }
 }
+async function generateSessionId () {
+  try {
+    const key = crypto.randomBytes(16).toString('base64');
+    setCookie(COOKIE_NAMES.SESSION_ID, key, COOKIE_TIME.SESSION_ID,)
+  } catch (error: any) {
+    console.error("Generate session ID error:", error.message)
+  }
+}
 
 
 
-/**
- * Updates the access token by refreshing it using the refresh token stored in cookies.
- *
- * If the access token is invalid or not present, it will attempt to refresh the access token using the refresh token.
- * If the refresh token is not present, it will delete the access and refresh token cookies.
- * If the token refresh is successful, it will update the access token cookie with the new token.
- *
- * @param request - The NextRequest object containing the cookies.
- * @returns The NextResponse object with the updated access token cookie.
- * @throws {Error} If an error occurs during the token refresh, the error message will be logged.
- */
 async function isAccessTokenValid(request: NextRequest) {
   let accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
   let isValid = await decrypt(accessToken).then(() => true).catch(() => false)
@@ -50,7 +42,11 @@ async function isAccessTokenValid(request: NextRequest) {
 async function refreshAccessToken(request: NextRequest, onFail: 'login' | 'delete-refresh-token' = 'login') {
   const response = NextResponse.next();
   const refreshToken = request.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
-
+  let isValid = await decrypt(refreshToken).then(() => true).catch(() => false)
+  if (!isValid) {
+    handleOnFail()
+    return response;
+  }
   try {
     let tokens = await (await getApiClient()).auth.authTokenRefreshCreate({ refresh: `${refreshToken}` })
     if ('access' in tokens) {
@@ -58,7 +54,6 @@ async function refreshAccessToken(request: NextRequest, onFail: 'login' | 'delet
     } else {
       handleOnFail()
     }
-
   } catch (error: any) {
     handleOnFail()
   }
@@ -70,17 +65,9 @@ async function refreshAccessToken(request: NextRequest, onFail: 'login' | 'delet
       response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
     }
   }
-
   return response;
 }
-/**
- * Sets a cookie with the specified key, value, and max age.
- *
- * @param key - The name of the cookie to set.
- * @param val - The value of the cookie to set.
- * @param maxAge - The maximum age of the cookie in seconds.
- * @param response - An optional NextResponse object to set the cookie on.
- */
+
 function setCookie(key: string, val: string, maxAge: number, response?: NextResponse<unknown>) {
   if (response) {
     response.cookies.set(
@@ -93,12 +80,6 @@ function setCookie(key: string, val: string, maxAge: number, response?: NextResp
 }
 
 
-/**
- * Retrieves the current user's information from the API using the access token stored in cookies.
- * 
- * @returns An object containing the user data and the access token, or `{ user: null, accessToken: null }` if the access token is not available.
- * @throws {Error} If an error occurs during the API request, the user will be redirected to the logout page.
- */
 const getUser = async () => {
   try {
     const accessToken = cookies().get(COOKIE_NAMES.ACCESS_TOKEN)?.value
@@ -113,4 +94,4 @@ const getUser = async () => {
   }
 };
 
-export { authenticate, refreshAccessToken, isAccessTokenValid, getUser };
+export { authenticate, refreshAccessToken, isAccessTokenValid, getUser, generateSessionId };

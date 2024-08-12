@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { refreshAccessToken } from './lib/helpers/auth';
+import { generateSessionId, isAccessTokenValid, refreshAccessToken } from './lib/helpers/auth';
 import { COOKIE_NAMES, COOKIE_TIME } from './lib/constants/config';
 import { getApiClient } from './lib/api';
+import { logout } from './lib/actions/auth';
 
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname
@@ -12,23 +13,45 @@ export async function middleware(request: NextRequest) {
 
     const accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
     const refreshToken = request.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
-    let tokens = await (await getApiClient()).auth.authTokenRefreshCreate({ refresh: `${refreshToken}` })
-    console.log(tokens);
+    const sessionId = request.cookies.get(COOKIE_NAMES.SESSION_ID)?.value
     
 
-    if (accessingProtectedRoute && !request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)) {
-        const response = NextResponse.redirect(new URL(`/login?redirect_back=${path}`, request.nextUrl))
-        response.cookies.set(COOKIE_NAMES.REDIRECT_BACK, path, { maxAge: COOKIE_TIME.REDIRECT_BACK })
-        return response
+    const nextResponse = NextResponse.next();
+
+    if(!sessionId){
+        generateSessionId();
     }
-    // if(!accessToken && refreshToken){
-    //     const response = await refreshAccessToken(request)
-    //     return response
-    // }
-    // if (accessingProtectedRoute && request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)) {
-    //     return await refreshAccessToken(request)
-    // }
-    return NextResponse.next();
+    if (accessingProtectedRoute) {
+        if (!accessToken) {
+            if (refreshToken) {
+                return await refreshAccessToken(request);
+            } else {
+                return logout('/login', nextResponse, request.nextUrl);
+            }
+        }
+        const accessTokenIsValid = await isAccessTokenValid(request)
+        if (accessTokenIsValid) {
+            return nextResponse
+        } else if (refreshToken) {
+            return await refreshAccessToken(request)
+        } else {
+            return logout('/login', nextResponse, request.nextUrl);
+        }
+    } else {
+        if (accessToken) {
+            const accessTokenIsValid = await isAccessTokenValid(request)
+            if (accessTokenIsValid) {
+                return nextResponse
+            } else{
+                nextResponse.cookies.delete(COOKIE_NAMES.ACCESS_TOKEN)
+                return nextResponse
+            }
+        } else if(refreshToken){
+            return await refreshAccessToken(request);
+        }
+    }
+
+    return nextResponse
 }
 
 export const config = {

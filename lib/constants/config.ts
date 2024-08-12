@@ -8,6 +8,13 @@ const COOKIE_NAMES = {
     ACCESS_TOKEN: "access.token",
     REFRESH_TOKEN: "refresh.token",
     REDIRECT_BACK: "redirect.back",
+    SESSION_ID: "session.id"
+}
+
+
+const REDIS_KEYS = {
+    ACCESS_TOKEN: "access.token.{sessionId}",
+    REFRESH_TOKEN: "refresh.token.{sessionId}",
 }
 
 
@@ -30,6 +37,7 @@ const COOKIE_TIME = {
     ACCESS_TOKEN: 8 * 60 * 60,
     REFRESH_TOKEN: 5 * 24 * 60 * 60,
     REDIRECT_BACK: 2 * 60 * 60,
+    SESSION_ID: 10 * 24 * 60 * 60
 }
 
 
@@ -45,11 +53,11 @@ const MIN_AMOUNT = 10.0;
 const MAX_AMOUNT = 5000.0;
 const AMOUNT_STEP = 5.0;
 
-export { 
-    COOKIE_NAMES, 
-    COOKIE_TIME, 
-    BACKEND_HOST, 
-    LS_NAMES, 
+export {
+    COOKIE_NAMES,
+    COOKIE_TIME,
+    BACKEND_HOST,
+    LS_NAMES,
     CURRENCY,
     MIN_AMOUNT,
     MAX_AMOUNT,

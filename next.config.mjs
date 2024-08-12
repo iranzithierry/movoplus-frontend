@@ -10,16 +10,13 @@ const nextConfig = {
                 port: '',
                 pathname: '**',
             },
-        ],
-    },
-    async redirects() {
-        return [
             {
-                source: "/github",
-                destination: "https://github.com/iranzithierry",
-                permanent: false,
+                protocol: 'http',
+                hostname: '127.0.0.1',
+                port: '8000',
+                pathname: '**',
             },
-        ];
+        ],
     },
 };
 
