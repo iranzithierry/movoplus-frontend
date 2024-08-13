@@ -13,7 +13,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         return (
             <HeadlessTextarea
                 className={cn(
-                    `flex border-0  w-full rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary ${invalid && 'ring-red-500 focus-visible:ring-red-500'}`,
+                    `flex border border-input bg-transparent px-3 py-1  w-full focus-visible:outline-none rounded-md placeholder:text-muted-foreground focus:ring-1 focus:ring-inset focus:ring-ring ${invalid && 'ring-red-500 focus-visible:ring-red-500'}`,
                     className
                 )}
                 ref={ref}

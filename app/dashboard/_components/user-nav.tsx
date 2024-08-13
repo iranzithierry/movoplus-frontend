@@ -18,29 +18,22 @@ export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-         <UserAvatar user={user}/>
+        <Button variant="ghost" className="relative rounded-full p-0">
+          <UserAvatar user={user} size={'lg'} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user?.name}</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {user?.email}
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent className="w-56 mx-1" align="end" forceMount>
         <DropdownMenuGroup>
+          <DropdownMenuLabel className="font-normal pt-4 pb-2">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">{user?.name}</p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {user?.email}
+              </p>
+            </div>
+          </DropdownMenuLabel>
           <DropdownMenuItem>
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
+            Manage Account
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

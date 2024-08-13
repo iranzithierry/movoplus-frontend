@@ -7,7 +7,7 @@ interface ProductInfoProps {
 }
 
 const ProductInfo = ({ product }: ProductInfoProps) => (
-    <div>
+    <div className='font-display'>
         <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{product.name}</h2>
         <section aria-labelledby="information-heading" className="mt-2">
             <h3 id="information-heading" className="sr-only">Product information</h3>

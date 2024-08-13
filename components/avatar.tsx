@@ -6,7 +6,7 @@ import { User } from '@/api'
 interface AvatarProps { 
     user: User | null, 
     success?: boolean, 
-    size?: 'sm' | 'md', 
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl', 
     extraClass?: string, 
     loading?: "lazy" | "eager" 
 }
