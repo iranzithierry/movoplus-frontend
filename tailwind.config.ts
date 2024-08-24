@@ -2,14 +2,23 @@ import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
-  content: ["./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./lib/constants/**/*.{ts,tsx}"],
+  content: [
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./lib/constants/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     extend: {
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular"],
-        display: ["var(--font-display)", "Inter", "ui-monospace", "SFMono-Regular"],
+        display: [
+          "var(--font-display)",
+          "Inter",
+          "ui-monospace",
+          "SFMono-Regular",
+        ],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -70,7 +79,12 @@ const config = {
       },
     },
   },
-  plugins: [require("autoprefixer"), require("tailwindcss-animate"), require("@tailwindcss/aspect-ratio"), require("@tailwindcss/typography")],
+  plugins: [
+    require("autoprefixer"),
+    require("tailwindcss-animate"),
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/typography"),
+  ],
 } satisfies Config;
 
 export default config;

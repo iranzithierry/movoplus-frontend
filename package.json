@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\" --single-attribute-per-line  --print-width 200",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "openapi:generate": "openapi -i 'http://localhost:8000/api/schema/?format=json&lang=en' -o ./api  --name ApiClient"
   },
   "dependencies": {
@@ -63,12 +63,9 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.1",
-    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3"
   }
