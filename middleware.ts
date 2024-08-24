@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { generateSessionId, isAccessTokenValid, refreshAccessToken } from './lib/helpers/auth';
-import { COOKIE_NAMES, COOKIE_TIME } from './lib/constants/config';
-import { getApiClient } from './lib/api';
+import { COOKIE_NAMES } from './lib/constants/config';
 import { logout } from './lib/actions/auth';
 
 export async function middleware(request: NextRequest) {

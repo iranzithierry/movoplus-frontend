@@ -90,8 +90,6 @@ export async function login(
     } catch (err: any) {
         wait = true;
         const error: ApiError = err;
-        console.log(err);
-
         return { message: error.body?.detail ?? 'An error occurred while logging in.' }
     } finally {
         if (!wait) {
