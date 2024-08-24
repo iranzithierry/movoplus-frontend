@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"   --bracket-same-line",
     "openapi:generate": "openapi -i 'http://localhost:8000/api/schema/?format=json&lang=en' -o ./api_  --name ApiClient --request ./api__"
   },
   "dependencies": {

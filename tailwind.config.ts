@@ -1,12 +1,8 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
-  content: [
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './lib/constants/**/*.{ts,tsx}',
-  ],
+  content: ["./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./lib/constants/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     extend: {
@@ -74,11 +70,7 @@ const config = {
       },
     },
   },
-  plugins: [
-    require('autoprefixer'),
-    require("tailwindcss-animate"), 
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/typography')
-  ]} satisfies Config
+  plugins: [require("autoprefixer"), require("tailwindcss-animate"), require("@tailwindcss/aspect-ratio"), require("@tailwindcss/typography")],
+} satisfies Config;
 
-export default config
+export default config;
