@@ -11,13 +11,7 @@ import { AuthFormState, LoginFormSchema, SignupFormSchema, } from '../definition
 import { NextResponse } from 'next/server';
 import { NextURL } from 'next/dist/server/web/next-url';
 
-/**
- * Registers a new user account with the provided form data.
- *
- * @param state - The current form state.
- * @param formData - The form data containing the user's name, email, and password.
- * @returns A promise that resolves to the updated form state, which may contain error messages if the registration failed.
- */
+
 export async function signup(
     state: AuthFormState,
     formData: FormData,
@@ -56,13 +50,7 @@ export async function signup(
     }
 }
 
-/**
- * Logs in a user with the provided email and password.
- *
- * @param state - The current form state.
- * @param formData - The form data containing the email and password.
- * @returns A promise that resolves to the updated form state, which may contain error messages if the login fails.
- */
+
 export async function login(
     state: AuthFormState,
     formData: FormData,
@@ -103,9 +91,7 @@ export async function login(
     }
 }
 
-/**
- * Logs out the current user by deleting the access and refresh tokens from the cookies and redirects the user to the home page.
- */
+
 export async function logout(returnTo = "/marketplace", nextResponse?: NextResponse, nextUrl?: NextURL) {
     const cookiesManager = nextResponse ? nextResponse.cookies : cookies();
     const redirector: () => void = nextResponse 

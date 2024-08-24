@@ -11,13 +11,7 @@ export class ProductsService {
 
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
-    /**
-     * List and Retrieves -  Products
-     * @param ordering Which field to use when ordering the results.
-     * @param search A search term.
-     * @returns Product
-     * @throws ApiError
-     */
+    
     public productsList(
         ordering?: string,
         search?: string,
@@ -34,12 +28,7 @@ export class ProductsService {
         });
     }
 
-    /**
-     * List and Retrieves -  Products
-     * @param id A unique integer value identifying this product.
-     * @returns Product
-     * @throws ApiError
-     */
+    
     public productsRetrieve(
         id: number,
     ): CancelablePromise<Product> {

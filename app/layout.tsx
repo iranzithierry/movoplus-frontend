@@ -44,11 +44,7 @@ export const viewport: Viewport = {
 }
 
 
-/**
- * Retrieves the current user's data, including the user object and access token.
- * This function is memoized using the `cache` function from React, which ensures that the same result is returned for the same input.
- * @returns {Promise<{ user: any, accessToken: string }>} An object containing the user data.
- */
+
 const getUserData = cache(async () => {
   // @ts-ignore
   const { user, accessToken } = await getUser();
@@ -56,13 +52,7 @@ const getUserData = cache(async () => {
 });
 
 
-/**
- * Wraps the application with the AuthProvider context, providing the authenticated user and access token to the application.
- *
- * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The child components to be wrapped by the AuthProvider.
- * @returns {React.ReactElement} - The wrapped application with the AuthProvider context.
- */
+
 function AuthWrapper({ children }: { children: React.ReactNode }): React.ReactElement {
   const { user, accessToken } = use(getUserData());
   return (

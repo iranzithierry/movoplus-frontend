@@ -5,35 +5,20 @@ import { formatDistanceToNow } from 'date-fns';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 import { CartState } from "@/app/(shopping)/marketplace/product/[uuid]/components/product-options";
 
-/**
- * Merges and applies Tailwind CSS utility classes to an element.
- *
- * @param {ClassValue[]} inputs - An array of class values to be merged and applied.
- * @returns {string} The merged and applied Tailwind CSS utility classes.
- */
+
 function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs))
 }
 
 
-/**
- * Formats a date string as a relative time string (e.g. "2 minutes ago").
- *
- * @param dateString - The date string to format.
- * @returns A relative time string.
- */
+
 const timeSince = (dateString: string): string => {
   const date = new Date(dateString);
   return formatDistanceToNow(date, { addSuffix: true });
 }
 
 
-/**
- * Extracts error values from a response object.
- *
- * @param response - The response object containing error information.
- * @returns The first error value, or the original response object if no error values are found.
- */
+
 function extractErrorValues(response: any) {
   const values = [];
   for (const key in response) {
@@ -48,13 +33,7 @@ function extractErrorValues(response: any) {
 }
 
 
-/**
- * Pluralizes a word based on the provided value.
- *
- * @param value - The value to determine the plural form.
- * @param key - The word to be pluralized.
- * @returns The pluralized form of the word.
- */
+
 function pluralize(value: any, key: string) {
   const irregularPlurals: { [key: string]: string } = {
     'child': 'children',
@@ -79,12 +58,7 @@ function pluralize(value: any, key: string) {
 }
 
 
-/**
- * Generates CSS class names based on the provided color string.
- *
- * @param color - The color string to use for the CSS classes.
- * @returns A string containing the CSS class names for the background and ring colors.
- */
+
 function getColorAttributes(color: string) {
   color = color.toLowerCase();
   if (color === "black") {
@@ -97,13 +71,7 @@ function getColorAttributes(color: string) {
 }
 
 
-/**
- * Formats a number or string representing money into a localized currency string.
- *
- * @param money - The number, bigint, or string representing the money amount to format.
- * @param currency - The currency code to use for formatting, defaulting to "RWF".
- * @returns The formatted money string.
- */
+
 const formatMoney = (money: number | bigint | string, currency = "RWF") => {
   const format = new Intl.NumberFormat(undefined, {
     style: 'currency',
@@ -114,25 +82,14 @@ const formatMoney = (money: number | bigint | string, currency = "RWF") => {
 }
 
 
-/**
- * Retrieves the user's avatar image URL based on the specified option.
- *
- * @param user - The user object containing the profile picture information.
- * @param option - The desired avatar image option, defaulting to 'original' if not provided.
- * @returns The URL of the user's avatar image for the specified option, or `null` if the profile picture is not available.
- */
+
 type AvatarOptions = "original" | "thumbnail" | "medium_square_crop" | "small_square_crop";
 function getUserAvatar(user: User, option: AvatarOptions = 'original') {
   return user?.profile_picture?.[option]
 }
 
 
-/**
- * Retrieves an item from the browser's local storage.
- *
- * @param key - The key of the item to retrieve from local storage.
- * @returns The parsed value of the item, or `null` if the item is not found or an error occurs.
- */
+
 function getFromLocalStorage(key: string) {
   if (typeof window !== 'undefined') {
     try {
@@ -146,12 +103,7 @@ function getFromLocalStorage(key: string) {
 }
 
 
-/**
- * Stores a value in the browser's local storage under the specified key.
- *
- * @param key - The key to use for storing the value in local storage.
- * @param value - The value to store in local storage.
- */
+
 function setToLocalStorage(key: string, value: any) {
   if (typeof window !== 'undefined') {
     try {
@@ -163,11 +115,7 @@ function setToLocalStorage(key: string, value: any) {
 }
 
 
-/**
- * Deletes an item from the browser's local storage.
- *
- * @param key - The key of the item to delete from local storage.
- */
+
 function deleteFromLocalStorage(key: string) {
   if (typeof window !== 'undefined') {
     try {

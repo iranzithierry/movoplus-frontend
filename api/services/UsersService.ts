@@ -13,13 +13,7 @@ export class UsersService {
 
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
-    /**
-     * Creates, Updates and Retrieves - User Accounts
-     * @param ordering Which field to use when ordering the results.
-     * @param search A search term.
-     * @returns User
-     * @throws ApiError
-     */
+    
     public usersList(
         ordering?: string,
         search?: string,
@@ -34,12 +28,7 @@ export class UsersService {
         });
     }
 
-    /**
-     * Creates, Updates and Retrieves - User Accounts
-     * @param requestBody
-     * @returns CreateUser
-     * @throws ApiError
-     */
+    
     public usersCreate(
         requestBody: CreateUser,
     ): CancelablePromise<CreateUser> {
@@ -51,12 +40,7 @@ export class UsersService {
         });
     }
 
-    /**
-     * Creates, Updates and Retrieves - User Accounts
-     * @param id A UUID string identifying this user.
-     * @returns User
-     * @throws ApiError
-     */
+    
     public usersRetrieve(
         id: string,
     ): CancelablePromise<User> {
@@ -69,13 +53,7 @@ export class UsersService {
         });
     }
 
-    /**
-     * Creates, Updates and Retrieves - User Accounts
-     * @param id A UUID string identifying this user.
-     * @param requestBody
-     * @returns User
-     * @throws ApiError
-     */
+    
     public usersUpdate(
         id: string,
         requestBody?: User,
@@ -91,13 +69,7 @@ export class UsersService {
         });
     }
 
-    /**
-     * Creates, Updates and Retrieves - User Accounts
-     * @param id A UUID string identifying this user.
-     * @param requestBody
-     * @returns User
-     * @throws ApiError
-     */
+    
     public usersPartialUpdate(
         id: string,
         requestBody?: PatchedUser,
@@ -113,11 +85,7 @@ export class UsersService {
         });
     }
 
-    /**
-     * Creates, Updates and Retrieves - User Accounts
-     * @returns User
-     * @throws ApiError
-     */
+    
     public usersMeRetrieve(): CancelablePromise<User> {
         return this.httpRequest.request({
             method: 'GET',

@@ -1,9 +1,4 @@
-/**
- * Defines the names of cookies used in the application.
- * - `ACCESS_TOKEN`: The name of the cookie that stores the access token.
- * - `REFRESH_TOKEN`: The name of the cookie that stores the refresh token.
- * - `REDIRECT_BACK`: The name of the cookie that stores the URL to redirect back to after authentication.
- */
+
 const COOKIE_NAMES = {
     ACCESS_TOKEN: "access.token",
     REFRESH_TOKEN: "refresh.token",
@@ -17,21 +12,13 @@ const REDIS_KEYS = {
 }
 
 
-/**
- * Defines the names of local storage keys used in the application.
- * @property {string} CART_STATE - The key used to store the state of the shopping cart.
- */
+
 const LS_NAMES = {
     CART_STATE: "cart.state",
 }
 
 
-/**
- * Defines the expiration times for various cookies used in the application.
- * - `ACCESS_TOKEN`: The expiration time for the access token cookie, in seconds (8 hours).
- * - `REFRESH_TOKEN`: The expiration time for the refresh token cookie, in seconds (5 days).
- * - `REDIRECT_BACK`: The expiration time for the redirect back cookie, in seconds (2 hours).
- */
+
 const COOKIE_TIME = {
     ACCESS_TOKEN: 8 * 60 * 60,
     REFRESH_TOKEN: 5 * 24 * 60 * 60,
@@ -40,9 +27,7 @@ const COOKIE_TIME = {
 }
 
 
-/**
- * Defines the URL of the backend server for the application. If the `BACKEND_HOST` environment variable is set, its value will be used. Otherwise, the default value of `'http://127.0.0.1:8000'` will be used.
- */
+
 const BACKEND_HOST = process.env.BACKEND_HOST ?? 'http://127.0.0.1:8000'
 
 const CURRENCY = "usd";
@@ -65,11 +50,7 @@ export {
 }
 
 
-/**
- * An array of CSS class names for various colors, used for styling UI elements.
- * The classes include both ring and background colors, covering a range of grays, reds, oranges, yellows, greens, blues, and purples.
- * This array is likely used to provide a set of predefined color options for the application.
- */
+
 let refreshColors = [
     'ring-gray-500',
     'ring-gray-900',

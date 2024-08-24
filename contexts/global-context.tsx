@@ -29,12 +29,7 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
   const [localStorageCartProducts, setLocalStorageCartProducts] = useState<CartState>({ cartProducts: [] });
 
-  /**
-   * Removes a product from the cart and updates the local storage and state accordingly.
-   *
-   * @param productId - The ID of the product to remove from the cart.
-   * @returns void
-   */
+  
   const removeFromCart = useCallback((productId: string) => {
     setLocalStorageCartProducts(prevState => {
       const newState: CartState = {
@@ -47,21 +42,12 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setTotalCartItems(prevState => prevState - 1);
     setCartProducts(prevProducts => prevProducts.filter(product => product?.id !== productId));
 
-    /**
-     * Not recommended to add {setTotalCartItems}
-     */
+    
   }, [setTotalCartItems]);
 
 
 
-  /**
-   * Adds a product to the cart, updating the local storage and cart state accordingly.
-   *
-   * @param product - The product to be added to the cart.
-   * @param selectedColor - The color of the product selected by the user.
-   * @param selectedSize - The size of the product selected by the user.
-   * @returns void
-   */
+  
   const addToCart = (product: Product, selectedColor: string, selectedSize: string) => {
     const currentCartState: CartState = getFromLocalStorage(LS_NAMES.CART_STATE) || { cartProducts: [] };
     const currentCartProduct = currentCartState.cartProducts.find(item => item?.id === product.id);
@@ -95,12 +81,7 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
 
-  /**
-   * Refreshes the cart products stored in local storage and optionally fetches updated cart products from the server.
-   *
-   * @param serverProducts - If true, the function will fetch updated cart products from the server and update the cart state.
-   * @returns void
-   */
+  
   const refreshCartedProducts = useCallback(async (serverProducts: boolean = false) => {
     const storedLocalCartState: CartState = getFromLocalStorage(LS_NAMES.CART_STATE);
     setLocalStorageCartProducts(storedLocalCartState);
