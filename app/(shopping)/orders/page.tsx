@@ -1,9 +1,9 @@
-import React from 'react'
-import { Metadata } from "next";
+import React from 'react';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Orders",
-}
+  title: 'Orders',
+};
 const orders = [
   {
     number: '4376',
@@ -25,7 +25,7 @@ const orders = [
     ],
   },
   // More orders...
-]
+];
 
 export default function Page() {
   return (
@@ -34,9 +34,7 @@ export default function Page() {
         <h1 id="your-orders-heading" className="text-3xl font-bold tracking-tight text-gray-900">
           Your Orders
         </h1>
-        <p className="mt-2 text-sm text-gray-500">
-          Check the status of recent orders, manage returns, and discover similar products.
-        </p>
+        <p className="mt-2 text-sm text-gray-500">Check the status of recent orders, manage returns, and discover similar products.</p>
       </div>
 
       <div className="mt-12 space-y-16 sm:mt-16">
@@ -65,11 +63,7 @@ export default function Page() {
               {order.products.map((product) => (
                 <div key={product.id} className="py-6 sm:flex">
                   <div className="flex space-x-4 sm:min-w-0 sm:flex-1 sm:space-x-6 lg:space-x-8">
-                    <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}
-                      className="h-20 w-20 flex-none rounded-md object-cover object-center sm:h-48 sm:w-48"
-                    />
+                    <img src={product.imageSrc} alt={product.imageAlt} className="h-20 w-20 flex-none rounded-md object-cover object-center sm:h-48 sm:w-48" />
                     <div className="min-w-0 flex-1 pt-1.5 sm:pt-0">
                       <h3 className="text-sm font-medium text-gray-900">
                         <a href={product.href}>{product.name}</a>
@@ -85,16 +79,10 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="mt-6 space-y-4 sm:ml-6 sm:mt-0 sm:w-40 sm:flex-none">
-                    <button
-                      type="button"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-2.5 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-full sm:flex-grow-0"
-                    >
+                    <button type="button" className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-2.5 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-full sm:flex-grow-0">
                       Buy again
                     </button>
-                    <button
-                      type="button"
-                      className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-full sm:flex-grow-0"
-                    >
+                    <button type="button" className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-full sm:flex-grow-0">
                       Shop similar
                     </button>
                   </div>
@@ -105,5 +93,5 @@ export default function Page() {
         ))}
       </div>
     </div>
-  )
+  );
 }

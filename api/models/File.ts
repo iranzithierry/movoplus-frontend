@@ -4,9 +4,8 @@
 /* eslint-disable */
 
 export type File = {
-    file: string;
-    thumbnail?: string | null;
-    readonly created_at: string;
-    readonly id: number;
+  file: string;
+  thumbnail?: string | null;
+  readonly created_at: string;
+  readonly id: number;
 };
-

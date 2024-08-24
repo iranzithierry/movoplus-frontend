@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-
 export type CustomTokenObtainPair = {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 };
-

@@ -1,26 +1,23 @@
 import { stripe } from '@/lib/stripe';
 import { notFound, redirect } from 'next/navigation';
-import React from 'react'
+import React from 'react';
 import Stripe from 'stripe';
 
 interface CheckoutPageProps {
   searchParams: {
-    action: 'cancel' | 'result',
-    session_id: string
-  }
+    action: 'cancel' | 'result';
+    session_id: string;
+  };
 }
 
 async function getActionFromParams(searchParams: CheckoutPageProps['searchParams']) {
-  if(searchParams.action === 'cancel')
-    redirect('/marketplace')
-  if (!searchParams.session_id)
-    notFound()
+  if (searchParams.action === 'cancel') redirect('/marketplace');
+  if (!searchParams.session_id) notFound();
 
-  const checkoutSession: Stripe.Checkout.Session =
-    await stripe.checkout.sessions.retrieve(searchParams.session_id, {
-      expand: ["line_items", "payment_intent"],
-    });
-  console.log("checkoutSession:", checkoutSession);
+  const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.retrieve(searchParams.session_id, {
+    expand: ['line_items', 'payment_intent'],
+  });
+  console.log('checkoutSession:', checkoutSession);
   return checkoutSession;
 }
 
@@ -255,7 +252,7 @@ async function getActionFromParams(searchParams: CheckoutPageProps['searchParams
 // http://localhost:3000/checkout?action=result&session_id=cs_test_b1A0TndrGrUmsQn56yagBwsSuXNemWCsnKpI2hd2ka7kfAMZ63p19tueiD
 
 export default async function Page({ searchParams }: CheckoutPageProps) {
-  const checkoutSession = await getActionFromParams(searchParams)
+  const checkoutSession = await getActionFromParams(searchParams);
   const paymentIntent = checkoutSession.payment_intent as Stripe.PaymentIntent;
   return (
     <div className="container">
@@ -266,9 +263,8 @@ export default async function Page({ searchParams }: CheckoutPageProps) {
         <PrintObject content={checkoutSession} />
       </>
     </div>
-  )
+  );
 }
-
 
 function PrintObject({ content }: { content: Stripe.PaymentIntent | Stripe.Checkout.Session }): JSX.Element {
   const formattedContent: string = JSON.stringify(content, null, 2);

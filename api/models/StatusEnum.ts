@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-
 export enum StatusEnum {
-    out_of_stock = 'Out of stock',
-    available = 'Available',
-    reserved = 'Reserved',
+  out_of_stock = 'Out of stock',
+  available = 'Available',
+  reserved = 'Reserved',
 }

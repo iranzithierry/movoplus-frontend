@@ -4,6 +4,5 @@
 /* eslint-disable */
 
 export type Email = {
-    email: string;
+  email: string;
 };
-

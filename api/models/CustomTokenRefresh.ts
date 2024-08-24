@@ -3,8 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-
 export type CustomTokenRefresh = {
-    refresh: string;
+  refresh: string;
 };
-

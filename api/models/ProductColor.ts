@@ -4,6 +4,5 @@
 /* eslint-disable */
 
 export type ProductColor = {
-    color: string;
+  color: string;
 };
-

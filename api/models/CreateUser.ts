@@ -4,11 +4,10 @@
 /* eslint-disable */
 
 export type CreateUser = {
-    readonly id?: string;
-    name: string;
-    email: string;
-    password: string;
-    profile_picture?: string | null;
-    readonly tokens?: string;
+  readonly id?: string;
+  name: string;
+  email: string;
+  password: string;
+  profile_picture?: string | null;
+  readonly tokens?: string;
 };
-

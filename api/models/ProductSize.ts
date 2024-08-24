@@ -4,7 +4,6 @@
 /* eslint-disable */
 
 export type ProductSize = {
-    size: string;
-    readonly in_stock: boolean;
+  size: string;
+  readonly in_stock: boolean;
 };
-

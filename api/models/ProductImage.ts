@@ -4,8 +4,7 @@
 /* eslint-disable */
 
 export type ProductImage = {
-    original: string;
-    small: string;
-    medium: string;
+  original: string;
+  small: string;
+  medium: string;
 };
-

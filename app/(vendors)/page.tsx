@@ -1,18 +1,18 @@
-import React from 'react'
-import { Metadata } from "next"
-import Hero from './components/sections/hero'
-import Stats from './components/sections/stats'
-import Contact from './components/sections/contact'
-import Features from './components/sections/features'
-import DashboardView from './components/sections/dashboard-view'
-import CeoTestimonial from './components/sections/ceo-testimonial'
-import CustomerAlaysis from './components/sections/customers-analysis'
+import React from 'react';
+import { Metadata } from 'next';
+import Hero from './components/sections/hero';
+import Stats from './components/sections/stats';
+import Contact from './components/sections/contact';
+import Features from './components/sections/features';
+import DashboardView from './components/sections/dashboard-view';
+import CeoTestimonial from './components/sections/ceo-testimonial';
+import CustomerAlaysis from './components/sections/customers-analysis';
 
 export const metadata: Metadata = {
-    title: "Vendors",
-}
+  title: 'Vendors',
+};
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-static';
 export default function HomePage() {
   return (
     <main>
@@ -40,5 +40,5 @@ export default function HomePage() {
         <CeoTestimonial />
       </div>
     </main>
-  )
+  );
 }

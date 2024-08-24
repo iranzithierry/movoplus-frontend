@@ -4,9 +4,8 @@
 /* eslint-disable */
 
 export type PatchedUser = {
-    readonly id?: string;
-    name?: string;
-    email?: string;
-    profile_picture?: string | null;
+  readonly id?: string;
+  name?: string;
+  email?: string;
+  profile_picture?: string | null;
 };
-

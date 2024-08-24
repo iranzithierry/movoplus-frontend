@@ -1,17 +1,8 @@
-"use client";
-import UserAvatar from "@/components/avatar";
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useAuth } from "@/contexts/auth-context"
+'use client';
+import UserAvatar from '@/components/avatar';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/contexts/auth-context';
 
 export function UserNav() {
   const { user } = useAuth();
@@ -27,20 +18,14 @@ export function UserNav() {
           <DropdownMenuLabel className="font-normal pt-4 pb-2">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">{user?.name}</p>
-              <p className="text-xs leading-none text-muted-foreground">
-                {user?.email}
-              </p>
+              <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuItem>
-            Manage Account
-          </DropdownMenuItem>
+          <DropdownMenuItem>Manage Account</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-        </DropdownMenuItem>
+        <DropdownMenuItem>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

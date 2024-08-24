@@ -8,19 +8,14 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class FilesService {
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
-
-    
-    public filesCreate(
-        formData: File,
-    ): CancelablePromise<File> {
-        return this.httpRequest.request({
-            method: 'POST',
-            url: '/api/files/',
-            formData: formData,
-            mediaType: 'multipart/form-data',
-        });
-    }
-
+  public filesCreate(formData: File): CancelablePromise<File> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/files/',
+      formData: formData,
+      mediaType: 'multipart/form-data',
+    });
+  }
 }
