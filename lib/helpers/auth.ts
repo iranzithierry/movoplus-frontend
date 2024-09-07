@@ -85,13 +85,13 @@ function setCookie(key: string, val: string, maxAge: number, response?: NextResp
 
 const getUser = async () => {
   try {
-    const accessToken = cookies().get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
-    if (accessToken) {
-      const user = await getApiClient(accessToken).then((client) => client.users.usersMeRetrieve());
-      return { user, accessToken };
-    } else {
-      return { user: null, accessToken: null };
-    }
+    // const accessToken = cookies().get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+    // if (accessToken) {
+    //   const user = await getApiClient(accessToken).then((client) => client.users.usersMeRetrieve());
+    //   return { user, accessToken };
+    // } else {
+    // }
+    return { user: null, accessToken: null };
   } catch (error) {
     redirect('/logout');
   }

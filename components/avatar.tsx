@@ -2,7 +2,7 @@ import React from 'react';
 import BoringAvatar from 'boring-avatars';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn, getUserAvatar } from '@/lib/utils';
-import { User } from '@/api';
+import { User } from '@/api_';
 interface AvatarProps {
   user: User | null;
   success?: boolean;

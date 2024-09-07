@@ -1,4 +1,4 @@
-import { Product } from '@/api';
+import { Product } from '@/api_';
 import { Star } from 'lucide-react';
 import { cn, formatMoney } from '@/lib/utils';
 

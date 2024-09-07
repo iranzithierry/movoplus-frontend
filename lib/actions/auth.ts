@@ -1,6 +1,6 @@
 'use server';
 
-import { ApiError } from '@/api';
+import { ApiError } from '@/api_';
 import { getApiClient } from '../api';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

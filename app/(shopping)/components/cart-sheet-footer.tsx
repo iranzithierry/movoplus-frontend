@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Product } from '@/api';
+import { Product } from '@/api_';
 import { formatMoney } from '@/lib/utils';
 import { LinkButton } from '@/components/ui/link-button';
 import CheckoutForm from '@/components/forms/checkout-form';

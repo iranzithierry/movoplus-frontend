@@ -1,4 +1,4 @@
-import { ProductColor } from '@/api';
+import { ProductColor } from '@/api_';
 import { cn, getColorAttributes } from '@/lib/utils';
 import { RadioGroup, Radio } from '@headlessui/react';
 

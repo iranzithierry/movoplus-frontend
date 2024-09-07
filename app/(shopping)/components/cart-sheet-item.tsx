@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Product } from '@/api';
+import { Product } from '@/api_';
 import { formatMoney } from '@/lib/utils';
 import { useGlobal } from '@/contexts/global-context';
 import { FileDigit, SwatchBook, TagIcon } from 'lucide-react';

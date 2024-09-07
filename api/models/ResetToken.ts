@@ -4,5 +4,6 @@
 /* eslint-disable */
 
 export type ResetToken = {
-  token: string;
+    token: string;
 };
+

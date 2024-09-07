@@ -4,15 +4,9 @@
 /* eslint-disable */
 
 export type User = {
-  readonly id: string;
-  name?: string;
-  email?: string;
-  profile_picture?: ProfilePicture;
+    readonly id: string;
+    name?: string;
+    email?: string;
+    profile_picture?: string | null;
 };
 
-export interface ProfilePicture {
-  original: string;
-  thumbnail: string;
-  medium_square_crop: string;
-  small_square_crop: string;
-}

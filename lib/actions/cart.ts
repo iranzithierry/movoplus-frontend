@@ -1,7 +1,7 @@
 'use server';
 import { getApiClient } from '../api';
 import { CartState } from '@/app/(shopping)/marketplace/product/[uuid]/components/product-options';
-import { Product } from '@/api';
+import { Product } from '@/api_';
 
 const fetchCartProducts = async (localStorageCartProducts: CartState): Promise<Product[]> => {
   try {

@@ -1,6 +1,6 @@
 'use client';
 import { toast } from 'sonner';
-import { Product } from '@/api';
+import { Product } from '@/api_';
 import { useState } from 'react';
 import SizeSelector from './size-selector';
 import ColorSelector from './color-selector';

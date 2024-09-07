@@ -1,6 +1,6 @@
 'use server';
 import { getApiClient } from '../api';
-import { Product } from '@/api';
+import { Product } from '@/api_';
 
 interface CreateOrderInstance {
   orderOwnerId: string;

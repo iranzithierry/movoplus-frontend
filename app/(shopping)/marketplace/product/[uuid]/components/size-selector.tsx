@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { ProductSize } from '@/api';
+import { ProductSize } from '@/api_';
 import { RadioGroup, Radio } from '@headlessui/react';
 
 interface SizeSelectorProps {

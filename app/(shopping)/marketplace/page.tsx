@@ -7,7 +7,7 @@ import { formatMoney } from '@/lib/utils';
 import HeadingFilters from '../components/heading-filters';
 
 export const metadata: Metadata = {
-  title: 'Products',
+  title: 'Marketplace',
 };
 export const revalidate = 60;
 

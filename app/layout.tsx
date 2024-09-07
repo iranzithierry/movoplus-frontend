@@ -64,14 +64,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang="en" suppressHydrationWarning>
       <body className={cn('bg-background font-sans antialiased', displayFont.variable, monoFont.variable)}>
         <Suspense fallback={<div>Loading...</div>}>
-          <AuthWrapper>
+          {/* <AuthWrapper> */}
             <GlobalProvider>
               <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
                 <Toaster closeButton richColors position="top-right" duration={2000} />
                 {process.env.MAINTENANCE == 'true' ? <div>The Site Is Under Maintainence</div> : children}
               </ThemeProvider>
             </GlobalProvider>
-          </AuthWrapper>
+          {/* </AuthWrapper> */}
         </Suspense>
         {/* <Analytics /> */}
       </body>

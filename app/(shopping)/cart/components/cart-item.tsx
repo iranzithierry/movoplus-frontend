@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback } from 'react';
 import Image from 'next/image';
-import { Product, StatusEnum } from '@/api';
+import { Product, StatusEnum } from '@/api_';
 import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { CartState } from '../../marketplace/product/[uuid]/components/product-options';
 import { useGlobal } from '@/contexts/global-context';

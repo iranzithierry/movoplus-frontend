@@ -4,6 +4,7 @@
 /* eslint-disable */
 
 export type PasswordToken = {
-  password: string;
-  token: string;
+    password: string;
+    token: string;
 };
+

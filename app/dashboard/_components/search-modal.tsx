@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
-import { ShoppingCartIcon } from 'lucide-react';
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { menuPages } from './side-nav';
 
 export function SearchModal({ open, setOpen, ...props }: { setOpen: React.Dispatch<React.SetStateAction<boolean>>; open: boolean }) {
   const router = useRouter();
@@ -37,15 +37,18 @@ export function SearchModal({ open, setOpen, ...props }: { setOpen: React.Dispat
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Pages">
-          <CommandItem
-            value={'Orders'}
-            onSelect={() => {
-              runCommand(() => router.push('/orders'));
-            }}
-          >
-            <ShoppingCartIcon className="mr-2 h-4 w-4" />
-            Orders
-          </CommandItem>
+          {menuPages.map((menu, idx) => (
+            <CommandItem
+              key={idx}
+              value={menu.title}
+              onSelect={() => {
+                runCommand(() => router.push(menu.link));
+              }}
+            >
+              <menu.icon className="mr-2 h-4 w-4" />
+              {menu.title}
+            </CommandItem>
+          ))}
         </CommandGroup>
       </CommandList>
     </CommandDialog>

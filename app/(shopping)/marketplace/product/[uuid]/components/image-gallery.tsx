@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import { useState } from 'react';
-import { ProductImage } from '@/api';
+import { ProductImage } from '@/api_';
 import { ArrowPathIcon, ArrowsPointingOutIcon, MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/outline';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { TransformWrapper, TransformComponent, useControls } from 'react-zoom-pan-pinch';

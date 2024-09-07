@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import UserAvatar from './avatar';
-import { User } from '@/api';
+import { User } from '@/api_';
 import Link from 'next/link';
 
 export default function UserMenu({ user }: { user: User }) {

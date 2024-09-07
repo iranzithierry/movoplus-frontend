@@ -14,7 +14,7 @@ const games = [
   },
 ];
 
-const menuPages = [
+export const menuPages = [
   {
     title: 'Dashboard',
     link: '/dashboard',

@@ -1,7 +1,7 @@
 'use client';
 
 import { toast } from 'sonner';
-import { Product } from '@/api';
+import { Product } from '@/api_';
 import { useAuth } from './auth-context';
 import { LS_NAMES } from '@/lib/constants/config';
 import { fetchCartProducts } from '@/lib/actions/cart';

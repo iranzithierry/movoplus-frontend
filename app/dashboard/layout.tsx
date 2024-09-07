@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
+import SideNav from './_components/side-nav';
 import { Search } from './_components/search';
+import { Button } from '@/components/ui/button';
 import { UserNav } from './_components/user-nav';
 import ShopSwitcher from './_components/shop-switcher';
-import SideNav from './_components/side-nav';
 import { Bars3Icon } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/button';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

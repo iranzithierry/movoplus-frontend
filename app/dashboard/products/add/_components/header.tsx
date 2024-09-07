@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,7 +7,7 @@ export default function AddProductHeader() {
   return (
     <div className="flex justify-between gap-4">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" className="h-7 w-7">
+        <Button title='Go Back' onClick={() => window.history.back()} variant="outline" size="icon" className="h-7 w-7">
           <ChevronLeft className="h-4 w-4" />
           <span className="sr-only">Back</span>
         </Button>
